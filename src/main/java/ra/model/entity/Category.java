@@ -1,5 +1,6 @@
 package ra.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,5 +26,6 @@ public class Category {
     private String categoryName;
     private Boolean status=true;
     @OneToMany(mappedBy = "category")
+            @JsonIgnore
     List<Product> products;
 }

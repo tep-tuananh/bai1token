@@ -39,6 +39,7 @@ public class WebSercurityConfig {
                 .authorizeHttpRequests((auth)->
                         auth.requestMatchers("/v1/auth/**").permitAll() // khoong cần đăng nhập
                                 .requestMatchers("/v1/admin/category").hasAuthority("ROLE_ADMIN") // cần phải đăng nhập
+                                .requestMatchers("/v1/admin/product").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/v1/user/").hasAuthority("ROLE_USER")
                                 .anyRequest().authenticated()
                 )

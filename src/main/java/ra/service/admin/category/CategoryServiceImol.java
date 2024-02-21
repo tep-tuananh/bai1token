@@ -16,8 +16,9 @@ public class CategoryServiceImol implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> getAll() {
-        return categoryRepository.findAll();
+    public Page<Category> getAll(Pageable pageable) {
+        Page<Category> categories = categoryRepository.findAll(pageable);
+        return categories;
     }
 
     @Override
