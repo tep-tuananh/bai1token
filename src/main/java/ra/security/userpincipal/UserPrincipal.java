@@ -13,7 +13,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Builder
 @Data
-public class UserPrincipel implements UserDetails {
+public class UserPrincipal implements UserDetails {
     private User user;
     private Collection<? extends GrantedAuthority> authorities;
     @Override

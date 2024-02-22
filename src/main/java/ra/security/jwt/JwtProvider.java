@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ra.security.userpincipal.UserPrincipel;
+import ra.security.userpincipal.UserPrincipal;
 
 import java.util.Date;
 @Component
@@ -17,7 +17,7 @@ public class JwtProvider {
     private String SECRET_KEY;
     private final Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
     // tao ra token
-    public String generateToken(UserPrincipel userPrincipel){
+    public String generateToken(UserPrincipal userPrincipel){
         return Jwts.builder().setSubject(userPrincipel.getUsername())
                 // thoi gian song
                 .setIssuedAt(new Date())

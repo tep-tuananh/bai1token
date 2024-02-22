@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ra.model.dto.reponse.UserReponse;
@@ -15,10 +16,8 @@ import ra.model.entity.User;
 import ra.repository.RoleRepositoty;
 import ra.repository.UserRepository;
 import ra.security.jwt.JwtProvider;
-import ra.security.userpincipal.UserPrincipel;
+import ra.security.userpincipal.UserPrincipal;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,13 +40,14 @@ public class UserServiceImpl implements UserService {
         } catch (AuthenticationException ex) {
             throw new RuntimeException("Sai tai khoan, mat khau");
         }
-        UserPrincipel userPrincipel =(UserPrincipel) authentication.getPrincipal();
+        UserPrincipal userPrincipel =(UserPrincipal) authentication.getPrincipal();
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         // tao ra token
         String token = jwtProvider.generateToken(userPrincipel);
         // converst sang doi tuong userReponse
         return UserReponse.builder()
                 .fullName(userPrincipel.getUser().getFullName())
-                .id(userPrincipel.getUser().getId())
+                .id(userPrincipel.getUser().getUser_id())
                 .token(token)
                 .roles(userPrincipel.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()))
                 .build();

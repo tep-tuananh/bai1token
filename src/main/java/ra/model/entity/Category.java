@@ -24,6 +24,9 @@ public class Category {
     @NotNull(message = "Khong de trong")
     @NotBlank(message = "Khong de trong")
     private String categoryName;
+    @NotNull(message = "Khong duoc de trong ")
+    @NotBlank(message = "Khong de trong")
+    private  String description;
     private Boolean status=true;
     @OneToMany(mappedBy = "category")
             @JsonIgnore

@@ -14,11 +14,13 @@ import ra.model.entity.Category;
 public class CategoryReponse {
     private Long id;
     private String categoryName;
-    private  Boolean status;
+    private String description;
+    private Boolean status;
 
-    public CategoryReponse(Category category){
-        this.id=category.getId();
-        this.categoryName=category.getCategoryName();
-        this.status=category.getStatus();
+    public CategoryReponse(Category category) {
+        this.id = category.getId();
+        this.categoryName = category.getCategoryName();
+        this.description = category.getDescription();
+        this.status = category.getStatus();
     }
 }

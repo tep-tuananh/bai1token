@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import ra.model.entity.User;
 import ra.repository.UserRepository;
 
-import java.nio.file.attribute.UserPrincipal;
 import java.util.Optional;
 
 @Service
@@ -22,7 +21,7 @@ public class UserDetailService implements UserDetailsService {
         Optional<User> userOptional = userRepository.findByUserName(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();// lay ra doi tuong
-            return UserPrincipel.builder()
+            return UserPrincipal.builder()
                     .user(user).authorities(user.getRoles().stream().map(
                     item->new SimpleGrantedAuthority(item.getName())).toList())
                     .build();

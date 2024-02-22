@@ -1,6 +1,8 @@
 package ra.service.admin.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ra.model.entity.Product;
 import ra.repository.ProducrRepository;
@@ -11,8 +13,9 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProducrRepository producrRepository;
     @Override
-    public List<Product> getAll() {
-        return producrRepository.findAll();
+    public Page<Product> getAll(Pageable pageable) {
+        Page<Product> products = producrRepository.findAll(pageable);
+        return products;
     }
 
     @Override
@@ -28,5 +31,10 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public void deleteById(Long id) {
         producrRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Product> findByName(String productName) {
+        return producrRepository.findByProductName(productName);
     }
 }
