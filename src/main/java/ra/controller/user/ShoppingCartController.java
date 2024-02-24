@@ -30,6 +30,7 @@ public class ShoppingCartController {
     private ProductService productService;
     @Autowired
     private ShopingCartRepository shopingCartRepository;
+
     // lay danh sach shoping cart theo id nguoi dang nhap
     @GetMapping("") // xong 16
     public ResponseEntity<List<ShoppingCart>> getAll() {
@@ -83,12 +84,13 @@ public class ShoppingCartController {
         }
         return null;
     }
-    // xóa toàn bộ sản phẩm trong giỏ hàng 19
-    @DeleteMapping()
-    public ResponseEntity<?> deleteAll(){
-        Long id =getUserId();
-        shopingCartRepository.deleteAll();
-        return null;
+
+    // xóa toàn bộ sản phẩm trong giỏ hàng 20
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteAll() {
+        List<ShoppingCart> shoppingCarts =shopingCartService.getAll(getUserId());// lấy toàn bộ danh sách sản phẩm theo id đăn nhập
+        shoppingCarts.forEach(shoppingCart -> shopingCartService.deleteById(shoppingCart.getId())); // vòng lặp để xóa theo id shopingcart
+        return new ResponseEntity<>("Xóa toàn bộ sản phẩm trong giỏ hàng thành công", HttpStatus.OK);
     }
 }
 

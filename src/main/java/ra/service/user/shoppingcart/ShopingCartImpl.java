@@ -47,11 +47,11 @@ public class ShopingCartImpl implements ShopingCartService {
     }
 
     @Override
-    public ShoppingCart findById(Long id,Long userId) {
-        ShoppingCart cart = shopingCartRepository.findShoppingCartsById(id,userId);
+    public ShoppingCart findById(Long id, Long userId) {
+        ShoppingCart cart = shopingCartRepository.findShoppingCartsById(id, userId);
         if (cart != null) {
             return cart;
-        }else {
+        } else {
             return null;
         }
     }
