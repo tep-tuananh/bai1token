@@ -1,15 +1,20 @@
 package ra.controller.user;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ra.model.dto.request.ShoppingCartRequest;
+import ra.model.entity.Product;
 import ra.model.entity.ShoppingCart;
+import ra.repository.ShopingCartRepository;
+import ra.repository.UserRepository;
 import ra.security.userpincipal.UserPrincipal;
+import ra.service.admin.product.ProductService;
+import ra.service.auth.UserService;
 import ra.service.user.shoppingcart.ShopingCartService;
 
 import java.util.List;
@@ -19,16 +24,71 @@ import java.util.List;
 public class ShoppingCartController {
     @Autowired
     private ShopingCartService shopingCartService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private ShopingCartRepository shopingCartRepository;
     // lay danh sach shoping cart theo id nguoi dang nhap
-    @GetMapping("")
-    public ResponseEntity<List<ShoppingCart>> getAll(){
+    @GetMapping("") // xong 16
+    public ResponseEntity<List<ShoppingCart>> getAll() {
         Long userId = getUserId();
-        List<ShoppingCart> shoppingCarts= shopingCartService.getAll(userId);
-        return  new ResponseEntity<>(shoppingCarts,HttpStatus.OK);
+        List<ShoppingCart> shoppingCarts = shopingCartService.getAll(userId);
+        return new ResponseEntity<>(shoppingCarts, HttpStatus.OK);
     }
-    public static Long getUserId() {
+
+    public static Long getUserId() { // lay ra user_id dang nhap
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         return userPrincipal.getUser().getUser_id();
     }
+
+    // them san pham vao gio hang
+    @PostMapping("/add") // xong 17
+    public ResponseEntity<?> add(@RequestBody @Valid ShoppingCartRequest shoppingCartRequest) {
+        ShoppingCart shoppingCart = shopingCartService.add(shoppingCartRequest);
+        return new ResponseEntity<>(shoppingCart, HttpStatus.CREATED);
+    }
+
+    // ttìm kiếm mã shoppingcartId có trong giỏ hàng không
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        ShoppingCart shoppingCart = shopingCartService.findById(id, getUserId());
+        if (shoppingCart == null) {
+            return new ResponseEntity<>("Không tồn tại mã này! ", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
+        }
+    }
+
+    // câp nhật
+    @PutMapping("/{id}") // xong 18
+    public ResponseEntity<ShoppingCart> update(@PathVariable Long id, @RequestBody ShoppingCart shoppingCart) {
+        shoppingCart.setProduct(productService.save(shoppingCart.getProduct()));
+        shoppingCart.setUser(userService.findById(getUserId()));
+        shoppingCart.setQuantity(shoppingCart.getQuantity());
+        ShoppingCart cart = shopingCartService.save(shoppingCart);
+        return new ResponseEntity<>(cart, HttpStatus.OK);
+    }
+
+    //
+    @DeleteMapping("/{id}") // xong 19
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        ShoppingCart shoppingCart = shopingCartService.findById(id, getUserId());
+        if (shoppingCart != null) {
+            shopingCartService.deleteById(id);
+        } else {
+            return new ResponseEntity<>("Không tồn tại mã này!", HttpStatus.OK);
+        }
+        return null;
+    }
+    // xóa toàn bộ sản phẩm trong giỏ hàng
+    @DeleteMapping()
+    public ResponseEntity<?> deleteAll(){
+        Long id =getUserId();
+        shopingCartRepository.deleteAll();
+        return null;
+    }
 }
+

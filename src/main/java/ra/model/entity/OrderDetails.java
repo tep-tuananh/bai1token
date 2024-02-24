@@ -26,12 +26,10 @@ public class OrderDetails {
     private Product product;
 
     @NotNull(message = "Khong de trong ")
-    @NotBlank(message = "Khong de trong")
     private String name;
 
     private Double price;
     @NotNull(message = "Khong de trong ")
-    @NotBlank(message = "Khong de trong")
     @Min(value = 1,message = "So luong lon hon 0")
     private Integer quantity;
 }

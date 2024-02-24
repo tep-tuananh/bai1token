@@ -1,5 +1,6 @@
 package ra.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.Min;
@@ -19,16 +20,15 @@ public class ShoppingCart { // gio hang
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @NotNull(message = "Khong duoc bo trong")
     private Product product;
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
     @NotNull(message = "Khong duoc bo trong")
-    @NotBlank(message = "Khong duoc bo trong")
+    @JsonIgnore
+    private User user;
     @Min(value = 1,message = "Gia tri lon hon 0")
     private Integer quantity;
 }

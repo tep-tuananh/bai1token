@@ -8,4 +8,6 @@ public interface UserService {
     // dang ky
     User register(User user);
     UserReponse login(UserLoginRequest userLogin);
+
+    User findById(Long id);
 }

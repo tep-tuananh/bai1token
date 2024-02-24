@@ -52,6 +52,12 @@ public class UserServiceImpl implements UserService {
                 .roles(userPrincipel.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()))
                 .build();
     }
+
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
     @Override
     public User register(User user) {
         // ma hoa mat khau
