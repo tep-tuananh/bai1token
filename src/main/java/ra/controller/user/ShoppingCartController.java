@@ -83,7 +83,7 @@ public class ShoppingCartController {
         }
         return null;
     }
-    // xóa toàn bộ sản phẩm trong giỏ hàng
+    // xóa toàn bộ sản phẩm trong giỏ hàng 19
     @DeleteMapping()
     public ResponseEntity<?> deleteAll(){
         Long id =getUserId();
