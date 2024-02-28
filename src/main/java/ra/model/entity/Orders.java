@@ -20,8 +20,8 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long serial_number;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long serialNumber;
     @NotNull(message = "Khong duoc de trong")
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
@@ -44,7 +44,6 @@ public class Orders {
     @Column(unique = true)
     private String phoneOder;
     @NotNull(message = "Khong duoc de trong")
-    @NotBlank(message = "Khong duoc null")
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 }
