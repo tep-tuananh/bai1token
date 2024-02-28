@@ -16,11 +16,12 @@ import ra.model.entity.User;
 import ra.repository.RoleRepositoty;
 import ra.repository.UserRepository;
 import ra.security.jwt.JwtProvider;
-import ra.security.userpincipal.UserPrincipal;
+import ra.security.userDetailSecurity.UserPrincipal;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
         // converst sang doi tuong userReponse
         return UserReponse.builder()
                 .fullName(userPrincipel.getUser().getFullName())
-                .id(userPrincipel.getUser().getUser_id())
+                .id(userPrincipel.getUser().getId())
                 .token(token)
                 .roles(userPrincipel.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()))
                 .build();

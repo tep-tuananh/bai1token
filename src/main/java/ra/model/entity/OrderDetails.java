@@ -19,15 +19,12 @@ public class OrderDetails {
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders orders;
-
     @Id
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
-
     @NotNull(message = "Khong de trong ")
     private String name;
-
     private Double price;
     @NotNull(message = "Khong de trong ")
     @Min(value = 1,message = "So luong lon hon 0")

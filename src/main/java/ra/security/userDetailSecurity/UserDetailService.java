@@ -1,4 +1,4 @@
-package ra.security.userpincipal;
+package ra.security.userDetailSecurity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

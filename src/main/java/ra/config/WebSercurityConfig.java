@@ -12,13 +12,13 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import ra.security.jwt.AccessDenied;
 import ra.security.jwt.JwtEntryPoint;
 import ra.security.jwt.JwtTokenFilter;
-import ra.security.userpincipal.UserDetailService;
+import ra.security.userDetailSecurity.UserDetailService;
 
 @Configuration
 @EnableWebSecurity
@@ -41,6 +41,7 @@ public class WebSercurityConfig {
                                 .requestMatchers("/v1/admin/category").hasAuthority("ROLE_ADMIN") // cần phải đăng nhập
                                 .requestMatchers("/v1/admin/product").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/v1/user/shopping-cart").hasAuthority("ROLE_USER")
+                                .requestMatchers("/v1/user/account").hasAuthority("ROLE_USER")
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling(

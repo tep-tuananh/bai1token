@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ra.security.userpincipal.UserPrincipal;
+import ra.security.userDetailSecurity.UserPrincipal;
 
 import java.util.Date;
 @Component

@@ -17,7 +17,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long id;
     @NotNull(message = "Khong duoc de trong")
     @Size(min = 5 , max = 30,message = "Tu 5-30 ky tu")
     private String userName;
@@ -39,7 +39,7 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role", // tao ra bang co ten user_role
-            joinColumns = @JoinColumn(name = "user_id"), // tham chieu den id bang user
+            joinColumns = @JoinColumn(name = "id"), // tham chieu den id bang user
             inverseJoinColumns = @JoinColumn(name = "role_id") // tham chien den bang role
     )
     private Set<Role> roles;

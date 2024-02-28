@@ -7,14 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import ra.model.dto.request.AddressRequest;
 import ra.model.dto.request.ShoppingCartRequest;
-import ra.model.entity.Product;
+import ra.model.entity.Address;
 import ra.model.entity.ShoppingCart;
-import ra.repository.ShopingCartRepository;
-import ra.repository.UserRepository;
-import ra.security.userpincipal.UserPrincipal;
+import ra.security.userDetailSecurity.UserPrincipal;
 import ra.service.admin.product.ProductService;
 import ra.service.auth.UserService;
+import ra.service.user.address.AddressService;
 import ra.service.user.shoppingcart.ShopingCartService;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class ShoppingCartController {
     @Autowired
     private ProductService productService;
     @Autowired
-    private ShopingCartRepository shopingCartRepository;
+    private AddressService addressService;
 
     // lay danh sach shoping cart theo id nguoi dang nhap
     @GetMapping("") // xong 16
@@ -42,7 +42,7 @@ public class ShoppingCartController {
     public static Long getUserId() { // lay ra user_id dang nhap
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        return userPrincipal.getUser().getUser_id();
+        return userPrincipal.getUser().getId();
     }
 
     // them san pham vao gio hang
@@ -91,6 +91,11 @@ public class ShoppingCartController {
         List<ShoppingCart> shoppingCarts =shopingCartService.getAll(getUserId());// lấy toàn bộ danh sách sản phẩm theo id đăn nhập
         shoppingCarts.forEach(shoppingCart -> shopingCartService.deleteById(shoppingCart.getId())); // vòng lặp để xóa theo id shopingcart
         return new ResponseEntity<>("Xóa toàn bộ sản phẩm trong giỏ hàng thành công", HttpStatus.OK);
+    }
+    @PostMapping("/checkout") // xong 21
+    public ResponseEntity<?> checkout(@RequestBody @Valid AddressRequest addressRequest){
+        Address address = addressService.save(addressRequest);
+        return new ResponseEntity<>(address,HttpStatus.CREATED);
     }
 }
 

@@ -5,10 +5,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ra.model.dto.request.ShoppingCartRequest;
-import ra.model.entity.Product;
 import ra.model.entity.ShoppingCart;
 import ra.repository.ShopingCartRepository;
-import ra.security.userpincipal.UserPrincipal;
+import ra.security.userDetailSecurity.UserPrincipal;
 import ra.service.admin.product.ProductService;
 import ra.service.auth.UserService;
 
@@ -27,7 +26,7 @@ public class ShopingCartImpl implements ShopingCartService {
     public static Long getUserId() { // lay ra user_id dang nhap
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        return userPrincipal.getUser().getUser_id();
+        return userPrincipal.getUser().getId();
     }
 
     @Override

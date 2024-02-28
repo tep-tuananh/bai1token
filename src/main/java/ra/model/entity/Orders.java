@@ -1,5 +1,6 @@
 package ra.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -23,22 +24,27 @@ public class Orders {
     private Long serial_number;
     @NotNull(message = "Khong duoc de trong")
     @ManyToOne
-    @JoinColumn(name = "user_id",referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JsonIgnore
     private User user;
     @NotNull(message = "Khong duoc de trong")
+    @NotBlank(message = "Khong duoc null")
     private String userName;
     @Min(value = 1,message = "Tong tien hoa  don lon hon 0")
     private Double price; // tong tien
     @NotNull(message = "Khong duoc de trong")
+    @NotBlank(message = "Khong duoc null")
     private String note;
     @NotNull(message = "Khong duoc de trong dia chi")
+    @NotBlank(message = "Khong duoc null")
     private String address;
     @NotNull(message = "Khong duoc bo trong")
+    @NotBlank(message = "Khong duoc null")
     @Pattern(regexp = "0[0-9]{9}",message = "Khong dung dinh dang sdt")
     @Column(unique = true)
     private String phoneOder;
     @NotNull(message = "Khong duoc de trong")
+    @NotBlank(message = "Khong duoc null")
+    @Enumerated(EnumType.STRING)
     private StatusEnum status;
-
-
 }

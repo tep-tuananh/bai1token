@@ -11,7 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+ @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -25,7 +25,7 @@ public class ShoppingCart { // gio hang
     @NotNull(message = "Khong duoc bo trong")
     private Product product;
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @NotNull(message = "Khong duoc bo trong")
     @JsonIgnore
     private User user;

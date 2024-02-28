@@ -1,4 +1,4 @@
-package ra.security.userpincipal;
+package ra.security.userDetailSecurity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

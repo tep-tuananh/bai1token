@@ -1,7 +1,6 @@
 package ra.model.dto.request;
 
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import ra.model.entity.Product;
 import ra.model.entity.ShoppingCart;
 import ra.model.entity.User;
-import ra.security.userpincipal.UserPrincipal;
+import ra.security.userDetailSecurity.UserPrincipal;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,16 +28,16 @@ public class ShoppingCartRequest {
     public static Long getUserId() { // lay ra user_id dang nhap
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        return userPrincipal.getUser().getUser_id();
+        return userPrincipal.getUser().getId();
     }
     public   ShoppingCart  add(ShoppingCartRequest shoppingCartRequest){
        // this.user_id= getUserId();
         this.productId  = shoppingCartRequest.getProductId();
         this.quantity = shoppingCartRequest.getQuantity();
         return ShoppingCart .builder()
-                .user(User.builder().user_id(getUserId()).build())
+                .user(User.builder().id(getUserId()).build())
                 .product(Product.builder().id(getProductId()).build())
-                .quantity(quantity)
+                .quantity(this.quantity)
                 .build();
     }
 }

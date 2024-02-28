@@ -13,10 +13,10 @@ import java.util.List;
 @Repository
 public interface ShopingCartRepository extends JpaRepository<ShoppingCart,Long> {
     // lấy ra tất cả dữ liệu của shoppingCart và product theo user_id
-    @Query("SELECT s,p from ShoppingCart s JOIN Product p ON s.product.id = p.id where s.user.user_id = :id  ")
+    @Query("SELECT s,p from ShoppingCart s JOIN Product p ON s.product.id = p.id where s.user.id = :id  ")
     List<ShoppingCart> findShoppingCartsByUserUser_idAndProductId(Long id);
 
-    @Query("select s from  ShoppingCart s  where  s.user.user_id = :userid and s.id = :id")
+    @Query("select s from  ShoppingCart s  where  s.user.id = :userid and s.id = :id")
     ShoppingCart findShoppingCartsById(Long id,Long userid);
 
 }
