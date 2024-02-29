@@ -25,7 +25,7 @@ public class User {
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",message = "không đúng định dạng")
     private String email;
     @NotNull(message = "Khong duoc bo trong")
-  @Size(min = 5, max = 30,message = "Tu 5- 30 ky tu")
+    @Size(min = 5, max = 30,message = "Tu 5- 30 ky tu")
     private String fullName;
     @NotNull(message = "Khong duoc bo trong")
     @Pattern(regexp = "0[0-9]{9}",message = "Khong dung dinh dang sdt")

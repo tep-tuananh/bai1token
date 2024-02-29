@@ -38,8 +38,9 @@ public class WebSercurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests((auth)->
                         auth.requestMatchers("/v1/auth/**").permitAll() // khoong cần đăng nhập
-                                .requestMatchers("/v1/admin/category").hasAuthority("ROLE_ADMIN") // cần phải đăng nhập
-                                .requestMatchers("/v1/admin/product").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/v1/admin/categorys").hasAuthority("ROLE_ADMIN") // cần phải đăng nhập
+                                .requestMatchers("/v1/admin/products").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/v1/admin/user").hasAuthority("ROLE_ADMIN")
                                 .requestMatchers("/v1/user/shopping-cart").hasAuthority("ROLE_USER")
                                 .requestMatchers("/v1/user/account").hasAuthority("ROLE_USER")
                                 .requestMatchers("/v1/user/history").hasAuthority("ROLE_USER")
