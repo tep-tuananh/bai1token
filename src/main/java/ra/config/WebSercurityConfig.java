@@ -43,6 +43,7 @@ public class WebSercurityConfig {
                                 .requestMatchers("/v1/user/shopping-cart").hasAuthority("ROLE_USER")
                                 .requestMatchers("/v1/user/account").hasAuthority("ROLE_USER")
                                 .requestMatchers("/v1/user/history").hasAuthority("ROLE_USER")
+                                .requestMatchers("/v1/user/wish-list").hasAuthority("ROLE_USER")
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling(
